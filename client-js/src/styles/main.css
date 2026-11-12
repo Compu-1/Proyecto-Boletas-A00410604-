@@ -1,0 +1,67 @@
+/* ============================================================
+   Tokens de diseño — fuente única de verdad para color y espaciado
+   ============================================================ */
+:root {
+  --color-bg: #f4f5f7;
+  --color-surface: #ffffff;
+  --color-border: #d8dade;
+  --color-text: #1a1c20;
+  --color-text-muted: #6b7280;
+  --color-accent: #4c3fb1;
+  --color-accent-dark: #3a3089;
+
+  --seat-available: #ffffff;
+  --seat-selected: #4c3fb1;
+  --seat-locked: #e5e7eb;
+  --seat-booked: #343842;
+
+  --color-danger: #c0392b;
+  --color-success: #1e8449;
+  --color-warning: #b8860b;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  --font-base: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Consolas", "Courier New", monospace;
+}
+
+/* ============================ Reset ============================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-base);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+#app {
+  min-height: 100%;
+}
