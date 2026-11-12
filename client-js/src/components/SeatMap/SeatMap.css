@@ -1,0 +1,247 @@
+/* ============================================================
+   Sala del auditorio — tratamiento visual de teatro moderno
+   ============================================================ */
+.hall {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-lg) var(--space-md);
+  background:
+    radial-gradient(130% 70% at 50% -10%, #2b2c57 0%, transparent 60%),
+    linear-gradient(180deg, var(--hall-bg-top) 0%, var(--hall-bg-bottom) 100%);
+  border: 1px solid var(--hall-border);
+  box-shadow: var(--shadow-lg);
+  color: var(--hall-text);
+}
+
+/* Halo del escenario proyectado sobre la platea */
+.hall__glow {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  width: 760px;
+  height: 420px;
+  transform: translateX(-50%);
+  background: radial-gradient(50% 50% at 50% 50%, rgba(83, 83, 238, 0.28) 0%, transparent 70%);
+  filter: blur(26px);
+  pointer-events: none;
+}
+
+.hall__header {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.hall__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--hall-text);
+}
+
+.hall__status {
+  font-size: 0.78rem;
+  color: var(--hall-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------ Escenario ------------------------------ */
+.stage {
+  position: relative;
+  height: 104px;
+  margin-bottom: var(--space-xl);
+}
+
+.stage__beams {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  gap: 70px;
+  pointer-events: none;
+}
+
+/* Haces de luz que caen del escenario hacia la platea */
+.stage__beam {
+  width: 90px;
+  height: 230px;
+  margin-top: 46px;
+  background: linear-gradient(180deg, rgba(138, 138, 245, 0.30) 0%, rgba(83, 83, 238, 0) 78%);
+  filter: blur(10px);
+}
+
+.stage__beam:nth-child(1) { transform: perspective(240px) rotateX(14deg) skewX(16deg); }
+.stage__beam:nth-child(2) { transform: perspective(240px) rotateX(14deg); width: 130px; }
+.stage__beam:nth-child(3) { transform: perspective(240px) rotateX(14deg) skewX(-16deg); }
+
+/* Tarima curva vista en perspectiva */
+.stage__platform {
+  position: absolute;
+  inset: 0 8% auto;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px 10px 50% 50% / 10px 10px 90px 90px;
+  background: linear-gradient(180deg, #3a3b73 0%, #212248 60%, #1a1b3b 100%);
+  border: 1px solid rgba(138, 138, 245, 0.35);
+  border-bottom-color: rgba(138, 138, 245, 0.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 14px 40px rgba(83, 83, 238, 0.30);
+}
+
+.stage__label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  color: rgba(232, 232, 246, 0.9);
+}
+
+/* -------------------------------- Zonas -------------------------------- */
+.hall__zones {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.zone__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.zone__name {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--hall-text-muted);
+  white-space: nowrap;
+}
+
+.zone__rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--hall-border), transparent);
+}
+
+.zone__price {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--icesi-indigo-light);
+  font-variant-numeric: tabular-nums;
+}
+
+.zone__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 7px;
+}
+
+.zone__row-label {
+  width: 16px;
+  padding-top: 5px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--hall-text-muted);
+  text-align: center;
+}
+
+/* Pasillo central */
+.zone__aisle { width: 26px; }
+
+/* -------------------------------- Sillas ------------------------------- */
+.seat {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 26px;
+  font-size: 0.64rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: rgba(232, 232, 246, 0.75);
+  background-color: var(--seat-available-bg);
+  border: 1px solid var(--seat-available-border);
+  /* Respaldo redondeado arriba, base recta: silueta de butaca */
+  border-radius: 8px 8px 3px 3px;
+  transform: translateY(var(--arc-offset, 0px));
+  transition: transform 0.12s ease, background-color 0.15s ease,
+              border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.seat:not(:disabled):hover {
+  transform: translateY(calc(var(--arc-offset, 0px) - 3px)) scale(1.1);
+  border-color: var(--icesi-indigo-light);
+  background-color: rgba(83, 83, 238, 0.28);
+  color: #ffffff;
+}
+
+.seat:focus-visible {
+  outline: 2px solid var(--icesi-indigo-light);
+  outline-offset: 2px;
+}
+
+.seat--mine {
+  background-color: var(--seat-mine-bg);
+  border-color: var(--icesi-indigo-light);
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(83, 83, 238, 0.22), 0 6px 14px rgba(83, 83, 238, 0.45);
+}
+
+.seat--held {
+  background-color: var(--seat-held-bg);
+  border-style: dashed;
+  border-color: rgba(154, 155, 187, 0.4);
+  color: rgba(154, 155, 187, 0.65);
+  cursor: not-allowed;
+}
+
+.seat--booked {
+  background-color: var(--seat-booked-bg);
+  border-color: rgba(154, 155, 187, 0.3);
+  color: rgba(154, 155, 187, 0.45);
+  cursor: not-allowed;
+  /* Diagonal tenue que marca la butaca como vendida */
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(154, 155, 187, 0.16) 0 2px,
+    transparent 2px 5px
+  );
+}
+
+/* ------------------------------- Convención ---------------------------- */
+.legend {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--hall-border);
+  font-size: 0.72rem;
+  color: var(--hall-text-muted);
+}
+
+.legend__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend .seat {
+  width: 20px;
+  height: 14px;
+  border-radius: 5px 5px 2px 2px;
+  transform: none;
+  pointer-events: none;
+}

@@ -1,0 +1,110 @@
+.event-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.event-header__identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-width: 0;
+}
+
+.event-header__logo {
+  height: 42px;
+  width: auto;
+  flex: 0 0 auto;
+}
+
+/* Filete institucional que separa el logo del título */
+.event-header__text {
+  padding-left: var(--space-md);
+  border-left: 2px solid var(--icesi-indigo);
+  min-width: 0;
+}
+
+.event-header__eyebrow {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--icesi-indigo);
+}
+
+.event-header__title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.event-header__subtitle {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.event-header__metrics {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.metric {
+  min-width: 86px;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  background-color: #fbfbfd;
+}
+
+.metric__label {
+  display: block;
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
+}
+
+.metric__value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.metric--status .metric__value {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.connection__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.connection--online { color: var(--color-success); }
+.connection--connecting { color: var(--color-warning); }
+.connection--offline { color: var(--color-danger); }
+
+.connection--online .connection__dot {
+  box-shadow: 0 0 0 3px rgba(23, 166, 115, 0.18);
+}
+
+@media (max-width: 760px) {
+  .event-header__metrics { width: 100%; justify-content: space-between; }
+  .metric { min-width: 0; flex: 1; }
+}

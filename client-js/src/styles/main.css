@@ -1,51 +1,69 @@
 /* ============================================================
-   Tokens de diseño — fuente única de verdad para color y espaciado
+   Tokens de diseño — identidad visual Universidad Icesi
+   Color de marca #5353EE tomado del logotipo institucional.
+   Tipografía institucional: Plus Jakarta Sans.
    ============================================================ */
 :root {
-  --color-bg: #f4f5f7;
+  /* Marca */
+  --icesi-indigo: #5353ee;
+  --icesi-indigo-dark: #3f3fc4;
+  --icesi-indigo-light: #8a8af5;
+  --icesi-indigo-soft: #ececfe;
+
+  /* Superficies claras */
+  --color-bg: #f4f4f8;
   --color-surface: #ffffff;
-  --color-border: #d8dade;
-  --color-text: #1a1c20;
-  --color-text-muted: #6b7280;
-  --color-accent: #4c3fb1;
-  --color-accent-dark: #3a3089;
+  --color-border: #e2e2ec;
+  --color-text: #15162b;
+  --color-text-muted: #6a6b85;
 
-  --seat-available: #ffffff;
-  --seat-selected: #4c3fb1;
-  --seat-locked: #e5e7eb;
-  --seat-booked: #343842;
+  /* Sala oscura del auditorio */
+  --hall-bg-top: #171834;
+  --hall-bg-bottom: #0b0b1a;
+  --hall-border: #2a2b4d;
+  --hall-text: #e8e8f6;
+  --hall-text-muted: #9a9bbb;
 
-  --color-danger: #c0392b;
-  --color-success: #1e8449;
-  --color-warning: #b8860b;
+  /* Estados de silla */
+  --seat-available-bg: rgba(255, 255, 255, 0.08);
+  --seat-available-border: rgba(173, 174, 214, 0.45);
+  --seat-mine-bg: var(--icesi-indigo);
+  --seat-held-bg: rgba(255, 255, 255, 0.04);
+  --seat-booked-bg: rgba(255, 255, 255, 0.035);
 
+  /* Semánticos */
+  --color-danger: #d52027;
+  --color-success: #17a673;
+  --color-warning: #e0a008;
+
+  /* Espaciado */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 32px;
 
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+  /* Formas */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 2px rgba(21, 22, 43, 0.06);
+  --shadow-md: 0 4px 16px rgba(21, 22, 43, 0.08);
+  --shadow-lg: 0 18px 48px rgba(21, 22, 43, 0.18);
 
-  --font-base: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "Consolas", "Courier New", monospace;
+  /* Tipografía */
+  --font-base: "Plus Jakarta Sans", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Consolas", "Courier New", monospace;
 }
 
 /* ============================ Reset ============================ */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html,
-body {
-  height: 100%;
-}
+html, body { height: 100%; }
 
 body {
   font-family: var(--font-base);
@@ -53,6 +71,7 @@ body {
   color: var(--color-text);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 button {
@@ -60,8 +79,15 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+  color: inherit;
 }
 
-#app {
-  min-height: 100%;
-}
+h1, h2, h3 { letter-spacing: -0.015em; }
+
+#app { min-height: 100%; }
+
+/* El atributo hidden debe prevalecer sobre cualquier display declarado
+   por un componente (display:flex, grid, etc.). Sin esta regla, un
+   elemento marcado como hidden sigue ocupando espacio e interceptando
+   los clics. */
+[hidden] { display: none !important; }
