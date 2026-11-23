@@ -14,6 +14,7 @@ export function createInitialState(clientId) {
     seats: [],
     isCheckoutOpen: false,
     isProcessing: false,
-    lastBooking: null
+    lastBooking: null,
+    bookings: []
   };
 }

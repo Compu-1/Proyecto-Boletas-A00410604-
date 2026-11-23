@@ -11,6 +11,7 @@ import { EventHeader } from '@/components/EventHeader/EventHeader.js';
 import { SeatMap } from '@/components/SeatMap/SeatMap.js';
 import { CartPanel } from '@/components/CartPanel/CartPanel.js';
 import { CheckoutModal } from '@/components/CheckoutModal/CheckoutModal.js';
+import { MyBookings } from '@/components/MyBookings/MyBookings.js';
 import { ToastHost } from '@/components/Toast/ToastHost.js';
 
 /**
@@ -33,7 +34,10 @@ export class App extends Component {
       <div class="app__header"></div>
       <main class="app__main">
         <div class="app__map"></div>
-        <div class="app__cart"></div>
+        <div class="app__side">
+          <div class="app__cart"></div>
+          <div class="app__bookings"></div>
+        </div>
       </main>
       <div class="app__modal"></div>
       <div class="app__toasts"></div>`;
@@ -47,6 +51,7 @@ export class App extends Component {
     this.addChild(new EventHeader(deps)).mount(this.element.querySelector('.app__header'));
     this.addChild(new SeatMap(deps)).mount(this.element.querySelector('.app__map'));
     this.addChild(new CartPanel(deps)).mount(this.element.querySelector('.app__cart'));
+    this.addChild(new MyBookings(deps)).mount(this.element.querySelector('.app__bookings'));
 
     this.#modal = this.addChild(new CheckoutModal(deps));
     this.#modal.mount(this.element.querySelector('.app__modal'));
@@ -82,6 +87,7 @@ export class App extends Component {
       store.setState({ connectionStatus: ConnectionStatus.ONLINE });
 
       await this.#sync();
+      await this.#loadBookings();
       this.#startPolling();
       this.#notify('Conectado al servicio de reservas.', ToastLevel.SUCCESS);
     } catch (error) {
@@ -99,6 +105,18 @@ export class App extends Component {
     }, APP_CONFIG.seats.syncIntervalMs);
 
     this.addCleanup(() => clearInterval(this.#syncTimerId));
+  }
+
+  /**
+   * Historial de compras del cliente (RF-6).
+   *
+   * Se consulta al conectar y después de cada compra, no en cada sondeo:
+   * las reservas confirmadas solo cambian cuando este mismo cliente compra.
+   */
+  async #loadBookings() {
+    const { store, bookingClient } = this.props;
+    const bookings = await bookingClient.getMyBookings(store.getState().clientId);
+    store.setState({ bookings });
   }
 
   async #sync() {
@@ -189,6 +207,7 @@ export class App extends Component {
       store.setState({ isProcessing: false, lastBooking: result });
       this.#notify(`Reserva ${result.bookingCode} confirmada.`, ToastLevel.SUCCESS);
       await this.#sync();
+      await this.#loadBookings();
     } catch (error) {
       store.setState({ isProcessing: false });
       this.#handleError(error);

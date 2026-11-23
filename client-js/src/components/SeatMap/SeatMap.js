@@ -17,6 +17,7 @@ const ROW_ARC_PX = 12;
  */
 export class SeatMap extends Component {
   #seatViews = new Map();
+  #priceLabels = new Map();
   #zonesHost = null;
   #statusEl = null;
 
@@ -79,10 +80,25 @@ export class SeatMap extends Component {
       state.seats.forEach((seat) => this.#seatViews.get(seat.id)?.sync(seat, state.clientId));
     }
 
+    this.#refreshZonePrices(state);
+
     const info = state.eventInfo;
     this.#statusEl.textContent = info
       ? `${info.availableSeats} disponibles · ${info.lockedSeats} retenidas · ${info.bookedSeats} vendidas`
       : `${state.seats.length} sillas en el recinto`;
+  }
+
+  /**
+   * Los precios por zona se toman del EventInfo remoto (RF-1): el servidor
+   * es la autoridad sobre la tarifa, y una constante local podría quedar
+   * desalineada con lo que realmente se cobra.
+   */
+  #refreshZonePrices(state) {
+    this.#priceLabels.forEach((label, zoneId) => {
+      const zone = APP_CONFIG.venue.zones.find((z) => z.id === zoneId);
+      const remotePrice = state.eventInfo ? state.eventInfo[zone.priceField] : undefined;
+      label.textContent = formatCurrency(remotePrice ?? zone.price);
+    });
   }
 
   /**
@@ -110,8 +126,9 @@ export class SeatMap extends Component {
       title.innerHTML = `
         <span class="zone__name">${zone.label}</span>
         <span class="zone__rule"></span>
-        <span class="zone__price">${formatCurrency(zone.price)}</span>`;
+        <span class="zone__price"></span>`;
       zoneEl.appendChild(title);
+      this.#priceLabels.set(zone.id, title.querySelector('.zone__price'));
 
       rows.forEach(({ row, seats }) => {
         const rowEl = document.createElement('div');

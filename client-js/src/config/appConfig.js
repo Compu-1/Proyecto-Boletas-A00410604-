@@ -1,7 +1,3 @@
-/**
- * Configuración central de la aplicación.
- * Fuente única de verdad para endpoints, reglas de negocio y aforo.
- */
 export const APP_CONFIG = Object.freeze({
   // Canal WebSocket del backend ZeroC Ice (RNF-4)
   rpc: {
@@ -21,10 +17,12 @@ export const APP_CONFIG = Object.freeze({
   venue: {
     name: 'Auditorio Principal',
     seatsPerRow: 10,
+    // priceField indica de qué campo de EventInfo se lee el precio vigente.
+    // El precio local es solo respaldo mientras llega la respuesta remota.
     zones: [
-      { id: 'ZONEVIP', label: 'Zona VIP', rows: ['A', 'B'], price: 120000 },
-      { id: 'ZONEPLATEA', label: 'Zona Platea', rows: ['C', 'D', 'E'], price: 80000 },
-      { id: 'ZONEGENERAL', label: 'Zona General', rows: ['F', 'G', 'H', 'I'], price: 45000 }
+      { id: 'ZONEVIP', label: 'Zona VIP', rows: ['A', 'B'], priceField: 'vipPrice', price: 120000 },
+      { id: 'ZONEPLATEA', label: 'Zona Platea', rows: ['C', 'D', 'E'], priceField: 'plateaPrice', price: 75000 },
+      { id: 'ZONEGENERAL', label: 'Zona General', rows: ['F', 'G', 'H', 'I'], priceField: 'generalPrice', price: 45000 }
     ]
   },
 
