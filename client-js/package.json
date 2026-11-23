@@ -6,7 +6,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack serve --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "slice": "slice2js --output-dir src/generated ../codigo_base/common/src/main/slice/BookingService.ice"
   },
   "keywords": ["zeroc-ice", "webpack", "vanilla-js", "rpc", "websocket"],
   "author": "Felipe Cuadros Muñoz - A00410604",
@@ -20,6 +21,6 @@
     "webpack-dev-server": "^5.1.0"
   },
   "dependencies": {
-    "ice": "3.7.10"
+    "ice": "3.7.100"
   }
 }

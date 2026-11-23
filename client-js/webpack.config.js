@@ -66,6 +66,14 @@ module.exports = (env, argv) => {
       client: { overlay: true }
     },
 
+    // El código que genera slice2js usa un require() dinámico que Webpack no
+    // puede analizar estáticamente. La advertencia es inofensiva en el
+    // navegador, donde Ice se resuelve desde window, y se silencia solo para
+    // esa carpeta.
+    ignoreWarnings: [
+      { module: /src[\\/]generated[\\/]/ }
+    ],
+
     devtool: isProduction ? 'source-map' : 'eval-source-map',
     performance: { hints: false }
   };

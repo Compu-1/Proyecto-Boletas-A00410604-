@@ -3,16 +3,16 @@ import './styles/main.css';
 import { Store } from '@/core/Store.js';
 import { EventBus } from '@/core/EventBus.js';
 import { App } from '@/components/App.js';
-import { MockBookingClient } from '@/services/MockBookingClient.js';
+import { IceBookingClient } from '@/services/IceBookingClient.js';
 import { getClientId } from '@/services/ClientIdentity.js';
 import { createInitialState } from '@/state/appState.js';
 
 /**
  * Arranque de la aplicación.
  *
- * Aquí se decide qué implementación de BookingClient se inyecta. En la
- * sesión 2 basta sustituir MockBookingClient por IceBookingClient: ningún
- * componente cambia.
+ * Aquí se decide qué implementación de BookingClient se inyecta. El cambio
+ * del simulador al cliente RPC real fue exactamente esta línea: ningún
+ * componente de la interfaz tuvo que modificarse.
  */
 function bootstrap() {
   const root = document.getElementById('app');
@@ -21,7 +21,7 @@ function bootstrap() {
   const clientId = getClientId();
   const store = new Store(createInitialState(clientId));
   const bus = new EventBus();
-  const bookingClient = new MockBookingClient();
+  const bookingClient = new IceBookingClient();
 
   const app = new App({ store, bus, bookingClient });
   app.mount(root);
